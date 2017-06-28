@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-mongoose.connect('localhost:27017/test');
+mongoose.connect('104.154.188.76:27017/test');
 var Schema = mongoose.Schema;
 var id = mongoose.Types.ObjectId();
 var ObjectID = require('mongodb').ObjectID;
@@ -14,10 +14,6 @@ var infomdata;
 
 var userDataSchema = new Schema({
     _id: Schema.Types.ObjectId,
-    data: {
-        type: JSON,
-        required: true
-    },
     script: String,
 }, {
     collection: 'userData'
@@ -109,7 +105,7 @@ router.post('/insert', function (req, res, next) {
                 break;
 
             case 'button':
-                var addon = ' <div class=list-group-item><span><label>' + body[i].question + '</label> : <button   ng-model='+ body[i].question  + ' >' + body[i].buttontext  + '</button></span></div>    ';
+                var addon = ' <div class=list-group-item"><span><label>' + body[i].question + '</label> : <button   ng-model='+ body[i].question  + ' >' + body[i].buttontext  + '</button></span></div>    ';
                 script = script + addon;
                 break;
         }
@@ -118,7 +114,7 @@ router.post('/insert', function (req, res, next) {
 
     var item = {
         _id: new ObjectID(),
-        data: req.body,
+      //  data: req.body,
         script: script
         // content: req.body.content,
         // author: req.body.author
@@ -146,7 +142,7 @@ router.post('/insert2', function (req, res, next) {
     console.log(body);
     var item = {
         _id: new ObjectID(),
-        data: req.body,
+        //data: req.body,
         script: "test"
         // content: req.body.content,
         // author: req.body.author
