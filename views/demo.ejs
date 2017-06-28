@@ -1,0 +1,144 @@
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>ngRepeatReorder 0.0.1 Demo</title>
+
+  <meta name="robots" content="noindex">
+  <!-- Latest compiled and minified CSS -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/SimeonC/pen/AJIyC" />
+
+  <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'><link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
+  <link rel='stylesheet prefetch' href='/javascripts/bootstrap/dist/css/bootstrap.min.css'>
+  <link rel='stylesheet prefetch' href='/javascripts/font-awesome/css/font-awesome.css'>
+
+    <style>
+.span-3 {
+  width: 277px;
+}
+.form-group.btn {
+  border: 1px solid #cccccc;
+  border-top-radius: 4px;
+  border-bottom-radius: 0;
+  width: 208px !important;
+}
+input.form-control, .list-group-item {
+  margin-bottom: 0;
+  border-radius: 0;
+  border: 1px solid #cccccc;
+  border-top: none;
+  padding-right: 20px;
+}
+.row .form-group:first-child input.form-control, .list-group .list-group-item:first-child {
+  border-top: 1px solid #cccccc;
+  border-top-radius: 4px;
+}
+.row .form-group:last-child input.form-control, .list-group .list-group-item:last-child {
+  border-bottom-radius: 4px;
+}
+.ng-repeat-reorder-parent, [ng-repeat-reorder]{
+	z-index: 10;
+	position: relative;
+}
+[ng-repeat-reorder].dragging{
+	z-index: 11;
+	position: absolute;
+}
+.form-group.dragging input, .list-group .list-group-item.dragging {
+  border: 1px solid #cccccc;
+}
+.form-group.dragging-after input, .list-group .list-group-item.dragging-after {
+  background-color: green;
+  border-top: 1px solid #cccccc;
+}
+.form-group.dragging-before input, .list-group .list-group-item.dragging-before {
+  background-color: red;
+}
+#names > div:first-child{
+	border-bottom-left-radius: none;
+	border-bottom-right-radius: none;
+}
+.active-drag-below, .unselectable .list-group-item {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+</style>
+
+</head>
+
+<body>
+
+	<div class="container" ng-app="dragndropdemo">
+		<div class="row">
+			<div class="span-12"><h4>Type in the text box to add new names to the list, delete all text in a box to remove it. Click and drag the <i class="fa fa-bars"></i> to reorder the names</h4></div>
+		</div>
+		<div class="row" ng-controller="Ctrl">
+
+      <div id="names" class="span-3 form-inline" role="form">
+				<div class="form-group btn btn-primary">Enter Names...</div>
+				<div class="form-group has-feedback transition" ng-repeat-reorder='name in names' ng-repeat-reorder-handle="i.fa.fa-bars">
+					<input class="form-control form-inline player" type='text'
+						tabindex='{{$index + 1}}'
+						ng-change='checkForNameDelete($index)'
+						ng-model='name.val'
+						ng-class="{'last-player': $index == names.length-1}">{{name}}</input>
+					<i class="fa fa-bars form-control-feedback"></i>
+				</div>
+				<!--- tabindex logic is +1 due to 0 start of $index and then add on to start at the correct point, make sure to use tabindex='{{players.length + offset}}' on everything that gets focus after this--->
+				<div class="form-group">
+					<input class="form-control form-inline" type='text'
+						ng-model='tempplayer'
+						tabindex='{{names.length + 1}}'
+						placeholder='Enter a name...'/>
+					</div>
+					<button ng-click="updateNames()">Add Name</button>
+				</div>
+			{{names}},{{tempplayer}}
+
+      </div>
+<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/hammer.js/1.0.5/hammer.min.js'></script><script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js'></script><script src='https://s.cdpn.io/61329/angular-hammer.js'></script><script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/61329/ngRepeatReorder.js'></script>
+	<script src='/javascripts/hammerjs/hammer.min.js'></script>
+	<script src='/javascripts/angular/angular.min.js'></script>
+	<script src='/javascripts/angular-hammer/angular-hammer.js'></script>
+	<script src='/javascripts/ngRepeatReorder/dist/ngRepeatReorder.js'></script>
+
+	<script type="text/javascript">
+		var app= angular.module("dragndropdemo", ['ngRepeatReorder']);
+app.controller('Ctrl', function($scope, $http, $window){
+
+  $scope.names = [{val:'bob'},{val:'lucy'},{val:'john'},{val:'luke'},{val:'han'}];
+  $scope.tempplayer = '';
+  $scope.updateNames = function (){
+    if($scope.tempplayer === "") return
+    $scope.names.push({val: $scope.tempplayer});
+    $scope.tempplayer = "";
+  };
+  $scope.checkForNameDelete = function($index){
+    if($scope.names[$index].val === ''){
+      $scope.names.splice($index, 1);
+    }
+  };
+  });
+	</script>
+
+</body>
+</html>

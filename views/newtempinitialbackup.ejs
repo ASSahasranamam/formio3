@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html class=''>
+<head>
+
+
+
+<!-- Latest compiled and minified CSS -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="/javascripts/ng-sortable/dist/ng-sortable.min.js"></script>
+<script type="text/javascript" src="/javascripts/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/javascripts/ng-sortable/dist/ng-sortable.min.css">
+
+<!-- OPTIONAL: default style -->
+<link rel="stylesheet" type="text/css" href="/javascripts/ng-sortable/dist/ng-sortable.style.min.css">
+
+<style >
+.bin, .item, .prop {
+  text-align: left;
+  margin: 5px;
+  padding: 10px;
+}
+
+.bin {
+  min-height: 150px;
+  min-width: 150px;
+  border: 1px solid red;
+
+}
+.item{
+background-color: white;
+border: 1px solid blue;
+
+}
+.prop{
+  border: 1px solid green;
+  min-width: 150px;
+}
+.main{
+  margin: 7px;
+  padding: 10px;
+  float:  center;
+}
+
+/**
+ * The dnd-list should always have a min-height,
+ * otherwise you can't drop to it once it's empty
+ */
+.simpleDemo ul[dnd-list] {
+    min-height: 42px;
+    padding-left: 0px;
+}
+
+/**
+ * The dndDraggingSource class will be applied to
+ * the source element of a drag operation. It makes
+ * sense to hide it to give the user the feeling
+ * that he's actually moving it.
+ */
+.simpleDemo ul[dnd-list] .dndDraggingSource {
+    display: none;
+}
+
+/**
+ * An element with .dndPlaceholder class will be
+ * added to the dnd-list while the user is dragging
+ * over it.
+ */
+.simpleDemo ul[dnd-list] .dndPlaceholder {
+    background-color: #ddd;
+    display: block;
+    min-height: 42px;
+}
+
+.simpleDemo ul[dnd-list] li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+}
+
+/**
+ * Show selected elements in green
+ */
+.simpleDemo ul[dnd-list] li.selected {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+
+</style>
+</head>
+<body ng-app="dragDrop" ng-controller="DragDropCtrl" >
+
+
+  <!-- Latest compiled and minified CSS -->
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+
+
+   <!-- Latest Sortable -->
+   <script src="//rubaxa.github.io/Sortable/Sortable.js"></script>
+
+
+  <div class="row main ">
+
+
+
+    <div class=" col-md-3  container">
+      <div class="item">
+      <p class="lead">item</p></br>
+
+      <ul  id="ul" ng-click="handleDrop()"   ng-model="$order"  >
+
+      <li  class="lead" ng-repeat="item in items" > ><span>
+        <a href ng-click="newItem($event,item)"> {{item}} </a>
+               </span></li>
+      </ul>
+<span> SHOW JSON : <input type="checkbox" ng-model="showJSOn"></span></br></br>
+
+<div ng-show="showJSOn">
+
+    {{questionelemnt | json}}
+    </br>
+</div>
+  </div>
+      </div><!-- End Of Items -->
+
+    <div class="  col-md-6 container">
+      <div class= "bin">
+    <p allign="center" class="lead"> Forms </p>
+    </br>
+
+                             <form class="form-horizontal">
+
+
+                               <div class=" container rows form-group"
+                               dnd-list="questionelemnt" ng-repeat="elemnt in questionelemnt"
+                                   dnd-draggable="elemnt"
+                                   dnd-moved="questionelemnt.splice($index, 1)"
+                                   dnd-effect-allowed="move"
+                                   dnd-selected="models.selected = elemnt"
+                                   ng-class="{'selected': models.selected === elemnt}"
+                               ng-repeat="elemnt in questionelemnt" id="{{elemnt.id}} "  >
+                                 <span>
+                                   <div>
+                                     <div ng-switch='elemnt.type'>
+                                       <div ng-switch-when="text">
+                                    <div>
+
+    <!-- The dnd-draggable directive makes an element draggable and will
+         transfer the object that was assigned to it. If an element was
+         dragged away, you have to remove it from the original list
+         yourself using the dnd-moved attribute -->
+
+                                     <label  ng-model="elemnt.question" >
+                                     {{elemnt.question}}</label>
+
+                                     </div>
+                                     <input  ng-model="elemnt.question"  ng-show="editorEnabled">
+                                     <button href="#" class="btn btn-success btn-xs " ng-show="editorEnabled" ng-click="editorEnabled=false">Done editing</button>
+                                     <input  type='{{ elemnt.type  }}' ng-model="elemnt.placeholder" placeholder = '{{ elemnt.placeholder }}'/>
+
+                                 <a ng-hide="elemnt.length == 1"href ng-click="questionelemnt.splice($index, 1)">remove</a>
+                                    <button ng-click="editProperties($event,$index,elemnt)" > Edit </button>
+                                  </div>
+                                   </div>
+                                   <div ng-switch='elemnt.type'>
+                                     <div ng-switch-when="button">
+                                   <label  ng-model="elemnt.question" ng-hide="editorEnabled" ng-click=" editorEnabled=true">
+                                   {{elemnt.question}}</label>
+
+                                   <input  ng-model="elemnt.question"  ng-show="editorEnabled">
+                                   <button href="#" class="btn btn-success btn-xs " ng-show="editorEnabled" ng-click="editorEnabled=false">Done editing</button>
+                                   <button ng-model="elemnt.buttontext" >{{ elemnt.buttontext  }}</button>
+
+                               <a ng-hide="elemnt.length == 1"href ng-click="questionelemnt.splice($index, 1)">remove</a>
+                                </div>
+                                 </div>
+                                 <div ng-switch='elemnt.type'>
+                                   <div ng-switch-when="checkbox">
+                                 <label  ng-model="elemnt.question" ng-hide="editorEnabled" ng-click=" editorEnabled=true">
+                                 {{elemnt.question}}</label>
+
+                                 <input  ng-model="elemnt.question"  ng-show="editorEnabled">
+                                 <button href="#" class="btn btn-success btn-xs " ng-show="editorEnabled" ng-click="editorEnabled=false">Done editing</button>
+                                 <input  type='{{ elemnt.type  }}' />
+
+                             <a ng-hide="elemnt.length == 1"href ng-click="questionelemnt.splice($index, 1)">remove</a>
+                              </div>
+                               </div>
+                             </div>
+                           </span>
+                         </div>
+
+
+                         </form><!--repeat end-->
+
+      </div>
+      </div> <!-- End Of Form -->
+
+
+
+
+
+<div class="col-md-3 container">
+  <div class=" prop" ng-show = "showproperties">
+<p class="lead" > Properties </br></p>
+<form class="form-horizontal">
+  <div class=" container rows form-group" ng-repeat="elemnt in questionelemnt" id="{{elemnt.id}} "  >
+    <span>
+      <div>
+        <div ng-if="elemnt.editfield">
+        <div ng-switch='elemnt.type'>
+          <div ng-switch-when="text">
+<div>
+  <div>
+        <label>
+        Enter Textfield Name : </label>
+      </div>
+          <div>
+       <input  ng-model="elemnt.question" >
+      </div>
+        <div>
+        <label>
+        Enter Placeholder Text: </label>
+      </div>
+          <div>
+        <input  type='{{ elemnt.type  }}' ng-model="elemnt.placeholder" placeholder = '{{ elemnt.placeholder }}'/>
+</div>
+    <a ng-hide="elemnt.length == 1"href ng-click="questionelemnt.splice($index, 1)">remove</a>
+       <button ng-click="editalert($event,$index,elemnt)" > Alert </button>
+     </div>
+      </div>
+      <div ng-switch='elemnt.type'>
+        <div ng-switch-when="button">
+      <label  ng-model="elemnt.question" ng-hide="editorEnabled" ng-click=" editorEnabled=true">
+      {{elemnt.question}}</label>
+
+      <input  ng-model="elemnt.question"  ng-show="editorEnabled">
+      <button href="#" class="btn btn-success btn-xs " ng-show="editorEnabled" ng-click="editorEnabled=false">Done editing</button>
+      <button ng-model="elemnt.buttontext" >{{ elemnt.buttontext  }}</button>
+
+  <a ng-hide="elemnt.length == 1"href ng-click="questionelemnt.splice($index, 1)">remove</a>
+   </div>
+    </div>
+    <div ng-switch='elemnt.type'>
+      <div ng-switch-when="checkbox">
+    <label  ng-model="elemnt.question" ng-hide="editorEnabled" ng-click=" editorEnabled=true">
+    {{elemnt.question}}</label>
+
+    <input  ng-model="elemnt.question"  ng-show="editorEnabled">
+    <button href="#" class="btn btn-success btn-xs " ng-show="editorEnabled" ng-click="editorEnabled=false">Done editing</button>
+    <input  type='{{ elemnt.type  }}' />
+
+<a ng-hide="elemnt.length == 1"href ng-click="questionelemnt.splice($index, 1)">remove</a>
+ </div>
+  </div>
+  </div>
+</div>
+</span>
+</div>
+</form><!--repeat end-->
+</div>
+</div><!-- End Of Properties -->
+
+</div><!--End of Splittation-->
+
+<script>
+// sort: true
+Sortable.create(sortTrue, {
+  group: "sorting",
+  sort: true
+});
+
+// sort: false
+Sortable.create(sortFalse, {
+  group: "sorting",
+  sort: false
+});
+</script>
+
+</body>
+
+
+<script>
+var app = angular.module('dragDrop', ['dndLists']);
+
+
+app.controller('DragDropCtrl', function($scope) {
+  $scope.items=['text','checkbox','button'];
+  $scope.order=0;
+  $scope.formArray=[];
+  $scope.temp;
+  $scope.editorEnabled=false;
+  $scope.showproperties = false;
+  var counter=0;
+  $scope.questionelemnt = [];
+  $scope.propertiesvalue = [];
+
+     $scope.newItem = function($event,item){
+          console.log("item :"+item);
+         counter++;
+         switch(item){
+           case "button":
+           $scope.questionelemnt.push(  { id:counter, type:item, question : 'Question-Click on me to edit!', answer : '',inline:true , buttontext:"Submit" , editfield :false} );
+           break;
+           case "text":
+           $scope.questionelemnt.push(  { id:counter, type:item, question : 'TextField Name', answer : '',inline:true , placeholder:"Placeholder" , editfield :false} );
+           break;
+           case "checkbox":
+           $scope.questionelemnt.push(  { id:counter, type:item, question : 'Question-Click on me to edit!', answer : '',inline:true , editfield :false} );
+           break;
+         }
+
+         $event.preventDefault();
+     }
+
+     $scope.editalert = function($event,$index,elemnt) {
+         var jsdate1 = elemnt.id;
+       console.log("elemnt :"+jsdate1 +" index :"+$index);
+       alert("hai"+elemnt);
+        $event.preventDefault();
+     }
+
+     $scope.editProperties = function($event,$index,elemnt){
+    elemnt.editfield = true;
+     console.log("elemnt.editfield :"+elemnt.editfield +" index :"+$index);
+         $scope.showproperties = $scope.showproperties === false ? true : false;
+
+     }
+
+
+  $scope.handleDrop = function(item) {
+    $scope.order++;
+    console.log($scope.order);
+    $scope.temp={"ngmod":item, "pos":$scope.order};
+    $scope.formArray.push($scope.temp);
+    console.log($scope.formArray);
+    return;
+  };
+
+
+$scope.PropShow = function(elemnt){
+  $scope.proptype=elemnt.type;
+  $scope.editorEnabled = $scope.editorEnabled === false ? true : false;
+  console.log($scope.editorEnabled);
+
+};
+
+});
+//# sourceURL=pen.js
+</script>
+</body></html>

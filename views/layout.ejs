@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>TEST </title>
+
+<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src= "/javascripts/webservice.js"> </script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+
+
+ <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</head>
+<body ng-app="myAppl" ng-controller="Ctrll">
+  <p>{{name}} </p>
+  <p>{{age}} </p>
+
+<script>
+
+var app=angular.module('myAppl',[]);
+app.controller('Ctrll', function($scope, $http, $window){
+
+$scope.name = "Hello World 2";
+$scope.age = "50";
+});
+
+</script>
+</body>
+
+</html>

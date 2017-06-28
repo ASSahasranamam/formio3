@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class=''>
+
+<head>
+
+
+
+    <!-- Latest compiled and minified CSS -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js
+"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js
+"></script>
+    <base href="/">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="/javascripts/ng-sortable/dist/ng-sortable.min.js"></script>
+    <script type="text/javascript" src="/javascripts/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/javascripts/ng-sortable/dist/ng-sortable.min.css">
+
+    <!-- OPTIONAL: default style -->
+    <link rel="stylesheet" type="text/css" href="/javascripts/ng-sortable/dist/ng-sortable.style.min.css">
+    <script type="text/javascript" src="/javascripts/angular-bind-html-compile-master/angular-bind-html-compile.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+
+
+    <style>
+        .bin,
+        .item,
+        .prop {
+            text-align: left;
+            margin: 5px;
+            padding: 10px;
+        }
+        
+        .bin {
+            min-height: 150px;
+            min-width: 150px;
+            border: 1px solid red;
+        }
+        
+        .item {
+            background-color: white;
+            border: 1px solid blue;
+        }
+        
+        .prop {
+            border: 1px solid green;
+            min-width: 150px;
+        }
+        
+        .main {
+            margin: 7px;
+            padding: 10px;
+            float: center;
+        }
+        /**
+ * The dnd-list should always have a min-height,
+ * otherwise you can't drop to it once it's empty
+ */
+        
+        .simpleDemo ul[dnd-list] {
+            min-height: 42px;
+            padding-left: 0px;
+        }
+        /**
+ * The dndDraggingSource class will be applied to
+ * the source element of a drag operation. It makes
+ * sense to hide it to give the user the feeling
+ * that he's actually moving it.
+ */
+        
+        .simpleDemo ul[dnd-list] .dndDraggingSource {
+            display: none;
+        }
+        /**
+ * An element with .dndPlaceholder class will be
+ * added to the dnd-list while the user is dragging
+ * over it.
+ */
+        
+        .simpleDemo ul[dnd-list] .dndPlaceholder {
+            background-color: #ddd;
+            display: block;
+            min-height: 42px;
+        }
+        
+        .simpleDemo ul[dnd-list] li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-top-right-radius: 4px;
+            border-top-left-radius: 4px;
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: -1px;
+        }
+        /**
+ * Show selected elements in green
+ */
+        
+        .simpleDemo ul[dnd-list] li.selected {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        
+        .glyphicon {
+            float: right;
+        }
+
+    </style>
+</head>
+
+<body ng-app="disp" ng-controller="dispCtrl">
+
+    <div class="bin rows container">
+
+        <form bind-html-compile="data2" class="rows form-horizontal">
+            <div class="list-group">
+<!--    
+            <div class="list-group">
+                <div class="" ng-repeat="i in data2 track by $index">
+                    <span>
+                        <div class="list-group-item" ng-repeat="elemnt in i.data track by $index" id=" ">
+                            
+                                 
+                        <div class="hardcopy">
+                                <object id="t" data="/html_template" type="text/html">
+
+                                     <div ng-switch='elemnt.type'>
+                                       <div ng-switch-when="text">
+                                         <div>
+                                     <label  ng-model="elemnt.question" >
+                                     {{elemnt.question}}</label>
+                                   </div>
+
+                                     <input  type='{{ elemnt.type  }}' ng-model="elemnt.placeholder" placeholder = '{{ elemnt.placeholder }}'/>
+                      
+                                 <label class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></label>
+                                  </div>
+                                   </div>
+                                   <div ng-switch='elemnt.type'>
+                                     <div ng-switch-when="button">
+                                   <label  ng-model="elemnt.question" ng-hide="editorEnabled" ng-click=" editorEnabled=true">
+                                   {{elemnt.question}}</label>
+
+                                   <input  ng-model="elemnt.question"  ng-show="editorEnabled">
+                                   <button ng-model="elemnt.buttontext" >{{ elemnt.buttontext  }}</button>
+
+                                </div>
+                                 </div>
+                                 <div ng-switch='elemnt.type'>
+                                   <div ng-switch-when="checkbox">
+                                 <label  ng-model="elemnt.question" ng-hide="editorEnabled" ng-click=" editorEnabled=true">
+                                 {{elemnt.question}}</label>
+
+                                 <input  ng-model="elemnt.question"  ng-show="editorEnabled">
+                                       
+                                       <form ><div  ng-repeat="x in elemnt.content track by $index" >
+                                           <label>{{x}}
+                                           <input  type='{{elemnt.type}}' name="{{elemnt.id}}" /></label>
+                                           </div></form>    
+                              </div>
+                               </div>
+                               <div ng-switch='elemnt.type'>
+                                   <div ng-switch-when="radio">
+                                
+                                 <label  ng-model="elemnt.question" ng-hide="editorEnabled" ng-click=" editorEnabled=true">
+                                 {{elemnt.question}}</label>
+                                    
+                                 <input  ng-model="elemnt.question"  ng-show="editorEnabled">
+                                       <form class="" ><div ng-repeat="x in elemnt.content track by $index" >
+                                           <label>{{x}}
+                                           <input  type='radio' name="{{elemnt.id}}" /></label>
+                                           </div></form>       
+      
+                              
+                               </div>           
+                             </div > 
+                            </object>
+                          </div>
+</div>
+                    </span>
+                </div>
+
+            </div>
+-->
+            
+            
+            </div>
+        </form>
+    </div>
+    DATA 2 : {{data2}}</br>
+    {{hcopy}}
+    <!--button ng-click="value()"> data disp </button-->
+    <script>
+        var app = angular.module('disp', ['ngSanitize','angular-bind-html-compile']);
+
+        app.config(['$locationProvider', function($locationProvider) {
+            $locationProvider.html5Mode(true);
+        }]);
+        app.controller('dispCtrl', ['$scope', '$location', '$http','$sce', function($scope, $location, $http, $sce) {
+
+            $scope.data2;
+            
+            $http.get('/infom').then(function successCallback(response) {
+                console.log("valuee:" + response);
+                $scope.data = JSON.stringify(response.data);
+                $scope.data2=$scope.safe($scope.data);
+                
+            });
+        $scope.safe=function(req,res){
+        var res = $sce.trustAsHtml(req);
+
+        return res;
+        
+        };
+        
+   
+
+           // var searchObject = $location.hash();
+            //console.log('searchObject');
+            //console.log(searchObject);
+            //var markup = document.documentElement.outerHTML;
+            //$scope.hcopy = markup;
+        }]);
+
+    </script>
+
+</body>
+
+</html>

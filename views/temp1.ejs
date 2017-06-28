@@ -1,0 +1,211 @@
+<html class="gr__localhost">
+
+<head>
+    <style type="text/css">
+        @charset "UTF-8";
+        [ng\:cloak],
+        [ng-cloak],
+        [data-ng-cloak],
+        [x-ng-cloak],
+        .ng-cloak,
+        .x-ng-cloak,
+        .ng-hide:not(.ng-hide-animate) {
+            display: none !important;
+        }
+        
+        ng\:form {
+            display: block;
+        }
+        
+        .ng-animate-shim {
+            visibility: hidden;
+        }
+        
+        .ng-anchor {
+            position: absolute;
+        }
+
+    </style>
+    <style type="text/css">
+        @charset "UTF-8";
+        [ng\:cloak],
+        [ng-cloak],
+        [data-ng-cloak],
+        [x-ng-cloak],
+        .ng-cloak,
+        .x-ng-cloak,
+        .ng-hide:not(.ng-hide-animate) {
+            display: none !important;
+        }
+        
+        ng\:form {
+            display: block;
+        }
+        
+        .ng-animate-shim {
+            visibility: hidden;
+        }
+        
+        .ng-anchor {
+            position: absolute;
+        }
+
+    </style>
+
+
+
+    <!-- Latest compiled and minified CSS -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js&#10;"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js&#10;"></script>
+    <base href="/">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="/javascripts/ng-sortable/dist/ng-sortable.min.js"></script>
+    <script type="text/javascript" src="/javascripts/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/javascripts/ng-sortable/dist/ng-sortable.min.css">
+
+    <!-- OPTIONAL: default style -->
+    <link rel="stylesheet" type="text/css" href="/javascripts/ng-sortable/dist/ng-sortable.style.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+
+
+    <style>
+        .bin,
+        .item,
+        .prop {
+            text-align: left;
+            margin: 5px;
+            padding: 10px;
+        }
+        
+        .bin {
+            min-height: 150px;
+            min-width: 150px;
+            border: 1px solid red;
+        }
+        
+        .item {
+            background-color: white;
+            border: 1px solid blue;
+        }
+        
+        .prop {
+            border: 1px solid green;
+            min-width: 150px;
+        }
+        
+        .main {
+            margin: 7px;
+            padding: 10px;
+            float: center;
+        }
+        /**
+ * The dnd-list should always have a min-height,
+ * otherwise you can't drop to it once it's empty
+ */
+        
+        .simpleDemo ul[dnd-list] {
+            min-height: 42px;
+            padding-left: 0px;
+        }
+        /**
+ * The dndDraggingSource class will be applied to
+ * the source element of a drag operation. It makes
+ * sense to hide it to give the user the feeling
+ * that he's actually moving it.
+ */
+        
+        .simpleDemo ul[dnd-list] .dndDraggingSource {
+            display: none;
+        }
+        /**
+ * An element with .dndPlaceholder class will be
+ * added to the dnd-list while the user is dragging
+ * over it.
+ */
+        
+        .simpleDemo ul[dnd-list] .dndPlaceholder {
+            background-color: #ddd;
+            display: block;
+            min-height: 42px;
+        }
+        
+        .simpleDemo ul[dnd-list] li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-top-right-radius: 4px;
+            border-top-left-radius: 4px;
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: -1px;
+        }
+        /**
+ * Show selected elements in green
+ */
+        
+        .simpleDemo ul[dnd-list] li.selected {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        
+        .glyphicon {
+            float: right;
+        }
+
+    </style>
+</head>
+
+<body ng-app="disp" ng-controller="dispCtrl" data-gr-c-s-loaded="true" class="ng-scope ng-binding">
+
+    <div class="bin rows container list-group">
+
+
+        <div class="list-group-item"><span><label>TextField Name</label> : <input type ="text" placeholder="Placeholder" ng-model="text1"  > </span> </div> {{text1}}
+        <div class="list-group-item"><span><label>Question-Click on me to edit! </br><span><label>input1</label> : <input type="checkbox" ng-model="newname" ng-true-value="true" ng-false-value="false"></br><span><label>input2</label> : <input type="checkbox" ng-model=newname2 ng-true-value="true" ng-false-value="false"></br> </span> </div>
+        <div class="list-group-item"><span><label>Question-Click on me to edit!</label> : <button   ng-model="radio" >Submit</button></span></div>
+        <div class="list-group-item"><span><label>Question-Click on me to edit!</br><span><label>input1</label> : <input type="radio" ng-model="radio3" name ="3" ></br><span><label>input2</label> : <input type="radio" ng-model="radio3" name ="3" ></br></span> </div>
+
+        {{text1}} {{newname}} {{newname2}}
+
+
+    </div>
+
+
+    <script>
+        var app = angular.module('disp', ['ngSanitize']);
+
+        app.config(['$locationProvider', function($locationProvider) {
+            $locationProvider.html5Mode(true);
+        }]);
+        app.controller('dispCtrl', ['$scope', '$location', '$http', '$sce', function($scope, $location, $http, $sce) {
+
+
+
+
+
+
+
+            // var searchObject = $location.hash();
+            //console.log('searchObject');
+            //console.log(searchObject);
+            //var markup = document.documentElement.outerHTML;
+            //$scope.hcopy = markup;
+        }]);
+
+    </script>
+
+
+</body>
+
+</html>
