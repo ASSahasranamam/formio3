@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html class=''>
+
+<head>
+
+
+
+    <!-- Latest compiled and minified CSS -->
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-touch.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+    <script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script>
+    <script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script>
+    <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>
+
+    <base href="/">
+
+    <script src="/javascripts/angular-ui-grid/ui-grid.min.js"></script>
+    <link rel="styleSheet" href="javascripts/angular-ui-grid/ui-grid.min.css" />
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .gridStyle {
+            border: 1px solid rgb(212, 212, 212);
+        }
+        
+        .grid {
+            width: 500px;
+            height: 250px;
+        }
+
+    </style>
+</head>
+
+<body ng-app="viewApp" ng-controller="viewCtrl">
+
+    <h1>RESULT.EJS </h1>
+    </br>
+    {{jsonData}}
+    <div ui-grid="{ data: getData }" class="grid"></div>
+    <script>
+        var app = angular.module('viewApp', ['ngTouch', 'ui.grid', ]);
+        app.config(['$locationProvider', function($locationProvider) {
+            $locationProvider.html5Mode(true);
+        }]);
+
+
+        app.controller('viewCtrl', function($scope, $location, $http, $sce, $parse) {
+            $scope.jsonData = [];
+            $scope.fdata = [];
+            $scope.getData;
+            $scope.gridOptions = {
+                data: 'jsonData',
+                columnDefs: $scope.fdata
+            };
+            $scope.q = {
+                query: $location.search()['_id']
+            };
+            console.log($scope.q.query);
+
+            $http.post('/table/fetch', $scope.q).then(function successCallback(response) {
+
+                $scope.getData = response.data;
+            });
+
+
+
+
+
+
+
+        });
+
+    </script>
+</body>
+
+</html>
